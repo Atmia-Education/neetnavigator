@@ -8,7 +8,7 @@
 					<div class="card-body">
 						<h4 class="mb-3 f-w-400">{{ __('Sign up') }}</h4>
 						<hr>
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('admin.login') }}">
                         @csrf
 						<div class="form-group mb-3">
 							<input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" name="email" id="Email" placeholder="Email address">
@@ -28,7 +28,7 @@
 						</div>
 						<button class="btn btn-block btn-primary mb-4">{{ __('Sign up') }}</button>
 						<hr>
-						<p class="mb-0 text-muted">Do have an account? <a href="{{ route('login') }}" class="f-w-400">Signup</a></p>
+						<p class="mb-0 text-muted">Do have an account? <a href="{{ route('admin.login') }}" class="f-w-400">Signup</a></p>
 					</div>
 				</div>
 			</div>

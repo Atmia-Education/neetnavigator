@@ -274,7 +274,7 @@
     <div class="yl-popular-course-content">
       <div class="row element8">
         @php
-        $colleges = \App\Models\College::all()->random(8);
+        $colleges = \App\Models\College::with(['city', 'state'])->inRandomOrder()->limit(8)->get();
         @endphp
         @foreach($colleges as $key => $college)
         <div class="col-lg-3 col-md-4 col-6">

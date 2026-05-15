@@ -1,15 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\{DashboardController,CollegeController,RankingController,BlogController,BlogCategoryController,EventController,CategoryController, AdminController,Auth\LoginController,Auth\ConfirmPasswordController};
+use App\Http\Controllers\Admin\{DashboardController,CollegeController,RankingController,BlogController,BlogCategoryController,EventController,CategoryController, AdminController,Auth\LoginController,Auth\ConfirmPasswordController,Auth\ForgotPasswordController,Auth\ResetPasswordController};
 use App\Http\Controllers\{UsersController,CustomerController,WalletController,TransactionsController,PartnersController};
 use App\DataTables\{StudentsDataTable};
 
 Route::group(['prefix'=>'admin/'], function(){
     Route::group(['namespace'=>'App\Http\Controllers\Admin'], function(){
-        Route::get('/', [LoginController::class, 'showLoginForm'])->name('admin.login');
-        Auth::routes(['register'=>false]);
-        Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+        Route::get('/', [LoginController::class, 'showLoginForm'])->name('admin.index');
+        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
+        Route::post('/login', [LoginController::class, 'login'])->name('admin.login.submit');
+        Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+        Route::get('/password/confirm', [ConfirmPasswordController::class, 'showConfirmForm'])->name('admin.password.confirm');
+        Route::post('/password/confirm', [ConfirmPasswordController::class, 'confirm'])->name('admin.password.confirm.submit');
+        Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('admin.password.request');
+        Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+        Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('admin.password.reset');
+        Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('admin.password.update');
+        Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout.get');
         Route::group(['middleware'=>'auth:admin'],function(){
             Route::any('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
             Route::get('master/students', function(StudentsDataTable $dataTable) {

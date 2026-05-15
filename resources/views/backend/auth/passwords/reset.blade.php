@@ -29,7 +29,7 @@
             <div class="card-body">
               <h4 class="card-title">Change Password</h4>
               @include('backend._inc.alert')
-              <form class="forms-sample" action="{{ route('password.update') }}" method="post">
+              <form class="forms-sample" action="{{ route('admin.password.update') }}" method="post">
                 @csrf()
                 <div class="form-group">
                   <label for="exampleInputUsername1">Password</label>
